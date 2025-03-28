@@ -409,6 +409,3 @@ func (obj *Buffer) SetFX(
 	err = toErr(ret)
 	return
 }
-
-// TODO
-//func (obj *Buffer) GetObjectInPath() {}

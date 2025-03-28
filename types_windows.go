@@ -272,5 +272,3 @@ type FXWavesReverb struct {
 	ReverbTime      float32 // [0.001,3000.0] default: 1000.0 ms
 	HighFreqRTRatio float32 // [0.001,0.999]  default: 0.001
 }
-
-// TODO include WAVEFORMATEX and WAVEFORMATEXTENSIBLE here?
