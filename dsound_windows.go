@@ -65,12 +65,9 @@ type directSoundVtbl struct {
 // method should be called for every new copy of a pointer to an interface on an
 // object.
 func (obj *DirectSound) AddRef() uint32 {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.AddRef,
-		1,
 		uintptr(unsafe.Pointer(obj)),
-		0,
-		0,
 	)
 	return uint32(ret)
 }
@@ -78,12 +75,9 @@ func (obj *DirectSound) AddRef() uint32 {
 // Release has to be called when finished using the object to free its
 // associated resources.
 func (obj *DirectSound) Release() uint32 {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.Release,
-		1,
 		uintptr(unsafe.Pointer(obj)),
-		0,
-		0,
 	)
 	return uint32(ret)
 }
@@ -92,14 +86,11 @@ func (obj *DirectSound) Release() uint32 {
 // The Size of the BUFFERDESC is set automatically.
 func (obj *DirectSound) CreateSoundBuffer(desc BUFFERDESC) (buf *Buffer, err Error) {
 	desc.Size = uint32(unsafe.Sizeof(desc))
-	ret, _, _ := syscall.Syscall6(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.CreateSoundBuffer,
-		4,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(unsafe.Pointer(&desc)),
 		uintptr(unsafe.Pointer(&buf)),
-		0,
-		0,
 		0,
 	)
 	err = toErr(ret)
@@ -110,12 +101,10 @@ func (obj *DirectSound) CreateSoundBuffer(desc BUFFERDESC) (buf *Buffer, err Err
 // represented by the device object.
 func (obj *DirectSound) GetCaps() (caps CAPS, err Error) {
 	caps.Size = uint32(unsafe.Sizeof(caps))
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.GetCaps,
-		2,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(unsafe.Pointer(&caps)),
-		0,
 	)
 	err = toErr(ret)
 	return
@@ -124,9 +113,8 @@ func (obj *DirectSound) GetCaps() (caps CAPS, err Error) {
 // DuplicateSoundBuffer creates a new secondary buffer that shares the original
 // buffer's memory.
 func (obj *DirectSound) DuplicateSoundBuffer(orig *Buffer) (copy *Buffer, err Error) {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.DuplicateSoundBuffer,
-		3,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(unsafe.Pointer(orig)),
 		uintptr(unsafe.Pointer(&copy)),
@@ -138,9 +126,8 @@ func (obj *DirectSound) DuplicateSoundBuffer(orig *Buffer) (copy *Buffer, err Er
 // SetCooperativeLevel sets the cooperative level of the application for this
 // sound device.
 func (obj *DirectSound) SetCooperativeLevel(window HWND, level uint32) Error {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.SetCooperativeLevel,
-		3,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(window),
 		uintptr(level),
@@ -150,12 +137,9 @@ func (obj *DirectSound) SetCooperativeLevel(window HWND, level uint32) Error {
 
 // Compact has no effect.
 func (obj *DirectSound) Compact() Error {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.Compact,
-		1,
 		uintptr(unsafe.Pointer(obj)),
-		0,
-		0,
 	)
 	return toErr(ret)
 }
@@ -165,12 +149,10 @@ func (obj *DirectSound) Compact() Error {
 // geometry information. Use the SPEAKER_CONFIG and SPEAKER_GEOMETRY functions
 // to unpack the uint32.
 func (obj *DirectSound) GetSpeakerConfig() (config uint32, err Error) {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.GetSpeakerConfig,
-		2,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(unsafe.Pointer(&config)),
-		0,
 	)
 	err = toErr(ret)
 	return
@@ -178,12 +160,10 @@ func (obj *DirectSound) GetSpeakerConfig() (config uint32, err Error) {
 
 // SetSpeakerConfig specifies the speaker configuration of the device.
 func (obj *DirectSound) SetSpeakerConfig(config uint32) Error {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.SetSpeakerConfig,
-		2,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(config),
-		0,
 	)
 	return toErr(ret)
 }
@@ -191,12 +171,10 @@ func (obj *DirectSound) SetSpeakerConfig(config uint32) Error {
 // Initialize initializes a device object that was created by using the
 // CoCreateInstance function.
 func (obj *DirectSound) Initialize(device *GUID) Error {
-	ret, _, _ := syscall.Syscall(
+	ret, _, _ := syscall.SyscallN(
 		obj.vtbl.Initialize,
-		2,
 		uintptr(unsafe.Pointer(obj)),
 		uintptr(unsafe.Pointer(device)),
-		0,
 	)
 	return toErr(ret)
 }
